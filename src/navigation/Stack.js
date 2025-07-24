@@ -1,16 +1,16 @@
 import { NavigationContainer } from '@react-navigation/native';
 import { createNativeStackNavigator } from '@react-navigation/native-stack';
 import { Screens } from '../assets/constants/Routes';
-import Home from '../screens/Home';
+import { SignUp } from '../screens/SignUp';
 
 const Stack = createNativeStackNavigator();
 
-export const HomeStack = () => {
+export const LoginStack = () => {
   return (
     <Stack.Navigator>
       <Stack.Screen
-        name={Screens.HOME}
-        component={Home}
+        name={Screens.SIGN_UP}
+        component={SignUp}
         options={{
           headerShown: false,
         }}
@@ -19,10 +19,10 @@ export const HomeStack = () => {
   );
 };
 
-export const Root = () => {
+export const StacksRoot = () => {
   return (
     <NavigationContainer>
-      <HomeStack />
+      <LoginStack />
     </NavigationContainer>
   );
 };

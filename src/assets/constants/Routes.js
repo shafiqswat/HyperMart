@@ -4,4 +4,5 @@ export const Screens = {
   ABOUT: 'About',
   CART: 'Cart',
   FAVORITE: 'Favorite',
+  SIGN_UP: 'SignUp',
 };

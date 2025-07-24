@@ -1,0 +1,29 @@
+{
+  "project_info": {
+    "project_number": "152259025647",
+    "project_id": "hyoermart",
+    "storage_bucket": "hyoermart.firebasestorage.app"
+  },
+  "client": [
+    {
+      "client_info": {
+        "mobilesdk_app_id": "1:152259025647:android:bb2afe5cffc859b62ad91a",
+        "android_client_info": {
+          "package_name": "com.project1"
+        }
+      },
+      "oauth_client": [],
+      "api_key": [
+        {
+          "current_key": "AIzaSyBQ04WcLYwZUQJqON884lvMYbjHAQgoD0U"
+        }
+      ],
+      "services": {
+        "appinvite_service": {
+          "other_platform_oauth_client": []
+        }
+      }
+    }
+  ],
+  "configuration_version": "1"
+}

@@ -2,21 +2,14 @@ import React from 'react';
 import { ScrollView, StyleSheet, View } from 'react-native';
 import { Header } from '../components/Header';
 import { Colors } from '../assets/constants/Color';
-import {
-  Circle,
-  FullCircle,
-  Grocery,
-  Maps,
-  RightArrow,
-} from '../assets/images';
-import { Input } from '../components/Input';
+import { Circle, FullCircle, Maps, RightArrow, Search } from '../assets/images';
 import { Label } from '../components/Label';
 import { WeekendCard } from '../components/WeekendCard';
 import Heading from '../components/Heading';
-import Swiper from 'react-native-swiper';
 import { CategoryCard } from '../components/CategoryCard';
 import { CategoryCardData } from '../assets/constants/Dummy';
 import { OrderCard } from '../components/OrderCard';
+import { Input } from '../components/Input';
 
 const Home = () => {
   return (
@@ -38,7 +31,15 @@ const Home = () => {
           <RightArrow />
         </View>
         {/* Input */}
-        <Input />
+        <Input
+          placeholder="Search Anything..."
+          inputStyle={{
+            backgroundColor: Colors.LIGHT_GRAY,
+            color: Colors.BLUE_GRAY,
+          }}
+          placeholderTextColor={Colors.BLUE_GRAY}
+          Icon={<Search />}
+        />
       </View>
 
       {/* Weekend Card */}
