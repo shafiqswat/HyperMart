@@ -5,4 +5,5 @@ export const Screens = {
   CART: 'Cart',
   FAVORITE: 'Favorite',
   SIGN_UP: 'SignUp',
+  LOGIN: 'Login',
 };

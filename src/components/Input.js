@@ -34,8 +34,8 @@ export const Input = forwardRef(
         return false;
       }
 
-      if (validation) {
-        const isValid = validation.test(text);
+      if (validation && validation.test instanceof RegExp) {
+        const isValid = validation.test.test(text); // use `.test()` from RegExp
         if (!isValid) {
           setError(validation.message || 'Invalid input');
           return false;

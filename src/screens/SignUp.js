@@ -5,60 +5,99 @@ import { Colors } from '../assets/constants/Color';
 import Heading from '../components/Heading';
 import { KeyboardAwareScrollView } from 'react-native-keyboard-aware-scroll-view';
 import { useAuth } from '../context/AuthContext';
+import { useNavigation } from '@react-navigation/native';
+import { Screens } from '../assets/constants/Routes';
 
 export const SignUp = () => {
-  const { SignUpFun } = useAuth();
-  const [firstName, setFirstName] = useState('');
-  const [lastName, setLastName] = useState('');
-  const [email, setEmail] = useState('');
-  const [password, setPassword] = useState('');
-  const [confirmPassword, setConfirmPassword] = useState('');
-  const [address, setAddress] = useState('');
+  const { SignUpFun, loading } = useAuth();
+  const navigate = useNavigation();
+
+  const [form, setForm] = useState({
+    firstName: '',
+    lastName: '',
+    email: '',
+    password: '',
+    confirmPassword: '',
+    address: '',
+  });
+  const [confirmError, setConfirmError] = useState('');
+
+  const handleChange = (field, value) => {
+    setForm(prev => ({ ...prev, [field]: value }));
+  };
 
   const handleSubmit = () => {
-    SignUpFun({ firstName, lastName, email, password, address });
+    if (form.password !== form.confirmPassword) {
+      setConfirmError('Passwords do not match');
+      return;
+    }
+    setConfirmError('');
+    SignUpFun(form, navigate);
   };
+
   return (
-    <KeyboardAwareScrollView
-      contentContainerStyle={styles.container}
-      enableOnAndroid={true}
-      extraScrollHeight={20}
-    >
-      <View style={styles.container}>
-        <Heading
-          heading="Login Page"
-          style={{ textAlign: 'center', fontSize: 20 }}
-        />
-        {
-          <Input
-            label="Enter Your FirstName"
-            onChangeText={setFirstName}
-            value={firstName}
-          />
-        }
-        <Input
-          label="Enter Your LastName"
-          onChangeText={setLastName}
-          value={lastName}
-        />
-        <Input label="Enter Your Email" onChangeText={setEmail} value={email} />
-        <Input
-          label="Enter Your Password"
-          onChangeText={setPassword}
-          value={password}
-        />
-        <Input
-          label="PLease Confirm Your Password"
-          onChangeText={setConfirmPassword}
-          value={confirmPassword}
-        />
-        <Input
-          label="Please Enter Your Address"
-          onChangeText={setAddress}
-          value={address}
-        />
-        <TouchableOpacity style={styles.btn} onPress={handleSubmit}>
-          <Text style={styles.btnText}>Submit</Text>
+    <KeyboardAwareScrollView contentContainerStyle={styles.container}>
+      <Heading
+        heading="Sign Up"
+        style={{ textAlign: 'center', fontSize: 20 }}
+      />
+
+      <Input
+        label="First Name"
+        required
+        onChangeText={text => handleChange('firstName', text)}
+        value={form.firstName}
+      />
+      <Input
+        label="Last Name"
+        required
+        onChangeText={text => handleChange('lastName', text)}
+        value={form.lastName}
+      />
+      <Input
+        label="Email"
+        required
+        onChangeText={text => handleChange('email', text)}
+        value={form.email}
+        validation={{
+          test: /^[^\s@]+@[^\s@]+\.[^\s@]+$/,
+          message: 'Invalid email format',
+        }}
+      />
+      <Input
+        label="Password"
+        required
+        secureTextEntry
+        onChangeText={text => handleChange('password', text)}
+        value={form.password}
+      />
+      <Input
+        label="Confirm Password"
+        required
+        secureTextEntry
+        onChangeText={text => handleChange('confirmPassword', text)}
+        value={form.confirmPassword}
+      />
+      <Input
+        label="Address"
+        required
+        onChangeText={text => handleChange('address', text)}
+        value={form.address}
+      />
+
+      {confirmError ? (
+        <Text style={styles.errorText}>{confirmError}</Text>
+      ) : null}
+
+      <TouchableOpacity style={styles.btn} onPress={handleSubmit}>
+        <Text style={styles.btnText}>{loading ? 'loading..' : 'Submit'}</Text>
+      </TouchableOpacity>
+      <View style={{ flexDirection: 'row', marginTop: 16 }}>
+        <Text>Already have an account? </Text>
+        <TouchableOpacity onPress={() => navigate.navigate(Screens.LOGIN)}>
+          <Text style={{ color: Colors.TOMATO, fontWeight: 'bold' }}>
+            Login
+          </Text>
         </TouchableOpacity>
       </View>
     </KeyboardAwareScrollView>
@@ -67,7 +106,6 @@ export const SignUp = () => {
 
 const styles = StyleSheet.create({
   container: {
-    textAlign: 'center',
     padding: 20,
   },
   btn: {
@@ -79,5 +117,11 @@ const styles = StyleSheet.create({
   },
   btnText: {
     color: Colors.WHITE,
+  },
+  errorText: {
+    color: '#FF3B30',
+    fontSize: 14,
+    marginTop: 4,
+    marginLeft: 4,
   },
 });
